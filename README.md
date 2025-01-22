@@ -50,3 +50,9 @@
 ## Testing 
    ```bash
    ./gradlew test
+```
+### Further Improvement Suggestions
+* Replace the static MovieDAO with a database-backed implementation
+* DAO Layer Test Cases - TODO
+* Controller Layer Test Cases - TODO
+* Currently, only service layer test cases are added to test the main functionality of the application
