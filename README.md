@@ -47,6 +47,27 @@
    ```bash
    http://localhost:8080/swagger-ui/index.html
 
+```bash
+ # Input
+ 
+{
+    "name": "C. U. Stomer",
+    "rentals": [
+        { "movieId": "F001", "days": 3 },
+        { "movieId": "F002", "days": 1 },
+        { "movieId": "F004", "days": 2 }
+    ]
+}
+
+# Expected Output
+
+Rental Record for C. U. Stomer:
+	You've Got Mail	3.5
+	Matrix	2.0
+	Fast & Furious X	6.0
+Amount owed is 11.5
+You earned 3 frequent points
+```
 ## Testing 
    ```bash
    ./gradlew test
