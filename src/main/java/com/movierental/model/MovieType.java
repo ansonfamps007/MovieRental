@@ -1,8 +1,8 @@
 package com.movierental.model;
 
-public class MovieType {
+public enum MovieType {
 
-    public static final String REGULAR = "regular";
-    public static final String CHILDRENS = "childrens";
-    public static final String NEW_RELEASE = "new";
+    REGULAR,
+    CHILDRENS,
+    NEW_RELEASE;
 }

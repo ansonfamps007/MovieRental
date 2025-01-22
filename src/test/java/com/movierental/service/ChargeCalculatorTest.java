@@ -4,6 +4,7 @@ import com.movierental.exception.MovieNotFoundException;
 import com.movierental.model.Customer;
 import com.movierental.model.Movie;
 import com.movierental.model.MovieRental;
+import com.movierental.model.MovieType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +22,7 @@ public class ChargeCalculatorTest {
     @Test
     void testCalculateCharge_ForRegularMovie() {
         ChargeCalculator calculator = new ChargeCalculator();
-        Movie regularMovie = new Movie("You've Got Mail", "regular");
+        Movie regularMovie = new Movie("You've Got Mail", MovieType.REGULAR);
 
         double charge = calculator.calculateCharge(regularMovie, 4);
         assertEquals(5.0, charge, "Charge should be 5.0 for 4 days rental of regular movie");
@@ -30,7 +31,7 @@ public class ChargeCalculatorTest {
     @Test
     void testCalculateCharge_ForNewRelease() {
         ChargeCalculator calculator = new ChargeCalculator();
-        Movie newRelease = new Movie("Fast & Furious X", "new");
+        Movie newRelease = new Movie("Fast & Furious X", MovieType.NEW_RELEASE);
 
         double charge = calculator.calculateCharge(newRelease, 3);
         assertEquals(9.0, charge, "Charge should be 9.0 for 3 days rental of new release");
@@ -39,7 +40,7 @@ public class ChargeCalculatorTest {
     @Test
     void testCalculateCharge_ForChildrensMovie() {
         ChargeCalculator calculator = new ChargeCalculator();
-        Movie childrensMovie = new Movie("Cars", "childrens");
+        Movie childrensMovie = new Movie("Cars", MovieType.CHILDRENS);
 
         double charge = calculator.calculateCharge(childrensMovie, 5);
         assertEquals(4.5, charge, "Charge should be 4.5 for 5 days rental of children's movie");
