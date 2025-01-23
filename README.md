@@ -50,14 +50,7 @@
 ```bash
  # Input
  
-{
-    "name": "C. U. Stomer",
-    "rentals": [
-        { "movieId": "F001", "days": 3 },
-        { "movieId": "F002", "days": 1 },
-        { "movieId": "F004", "days": 2 }
-    ]
-}
+http://localhost:8080/api/rentals/statement?customerId=1001
 
 # Expected Output
 
@@ -72,8 +65,9 @@ You earned 3 frequent points
    ```bash
    ./gradlew test
 ```
-### Further Improvement Suggestions
-* Replace the static MovieDAO with a database-backed implementation
+### New Enhancements
+* Replace the static MovieDAO and CustomerDAO with a database-backed implementation along with proper normalization
 * DAO Layer Test Cases - TODO
 * Controller Layer Test Cases - TODO
 * Currently, only service layer test cases are added to test the main functionality of the application
+* Implement logging with appropriate levels for improved debugging and monitoring

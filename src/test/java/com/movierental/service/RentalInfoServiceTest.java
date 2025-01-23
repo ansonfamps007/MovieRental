@@ -1,5 +1,6 @@
 package com.movierental.service;
 
+import com.movierental.dao.CustomerDAO;
 import com.movierental.dao.MovieDAO;
 import com.movierental.exception.MovieNotFoundException;
 import com.movierental.model.Customer;
@@ -7,6 +8,7 @@ import com.movierental.model.Movie;
 import com.movierental.model.MovieRental;
 import com.movierental.model.MovieType;
 import com.movierental.service.impl.RentalInfoServiceImpl;
+import com.movierental.util.ChargeCalculator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,16 +25,16 @@ import static org.mockito.Mockito.when;
 public class RentalInfoServiceTest {
 
     private RentalInfoService rentalInfoService;
-    private ChargeCalculator chargeCalculator;
     private MovieDAO movieDAO;
+    private CustomerDAO customerDAO;
     private StatementGeneratorService statementGeneratorService;
 
     @BeforeEach
     void setUp() {
-        chargeCalculator = mock(ChargeCalculator.class);
         movieDAO = mock(MovieDAO.class);
+        customerDAO = mock(CustomerDAO.class);
         statementGeneratorService = mock(StatementGeneratorService.class);
-        rentalInfoService = new RentalInfoServiceImpl(movieDAO, chargeCalculator, statementGeneratorService);
+        rentalInfoService = new RentalInfoServiceImpl(movieDAO, customerDAO, statementGeneratorService);
     }
 
     @Test
@@ -48,10 +50,13 @@ public class RentalInfoServiceTest {
                 .thenReturn(Optional.of(new Movie("You've Got Mail", MovieType.REGULAR)))
                 .thenReturn(Optional.of(new Movie("Matrix", MovieType.REGULAR)));
 
-        // Mocking the charge calculator
-        when(chargeCalculator.calculateCharge(any(Movie.class), anyInt()))
-                .thenReturn(3.5)
-                .thenReturn(2.0);
+        // Mocking the customer dao
+        when(customerDAO.getCustomerById(anyString()))
+                .thenReturn(Optional.of(new Customer("C. U. Stomer",
+                        List.of(new MovieRental("F001", 3),
+                                new MovieRental("F002", 1),
+                                new MovieRental("F004", 2)))));
+
 
         StringBuilder result = new StringBuilder();
         result.append("Rental Record for ").append("C. U. Stomer").append(":\n");
@@ -63,7 +68,7 @@ public class RentalInfoServiceTest {
                 .thenReturn(result.toString());
 
 
-        String statement = rentalInfoService.generateStatement(customer);
+        String statement = rentalInfoService.generateStatement(anyString());
 
         String expected = "Rental Record for C. U. Stomer:\n" +
                 "\tYou've Got Mail\t3.5\n" +
@@ -79,12 +84,8 @@ public class RentalInfoServiceTest {
 
         Customer customer = new Customer("C. U. Stomer", List.of());
 
-        // Mocking the charge calculator for valid movies
-        when(chargeCalculator.calculateCharge(any(Movie.class), anyInt()))
-                .thenReturn(3.5);
-
         Exception exception = assertThrows(MovieNotFoundException.class, () -> {
-            rentalInfoService.generateStatement(customer);
+            rentalInfoService.generateStatement(anyString());
         });
 
         // Assert
@@ -101,15 +102,11 @@ public class RentalInfoServiceTest {
                 new MovieRental("F002", 2)   // Movie: "Matrix", rental for 2 days
         ));
 
-        // Mocking the charge calculator for valid movies
-        when(chargeCalculator.calculateCharge(any(Movie.class), anyInt()))
-                .thenReturn(3.5);
-
         when(movieDAO.getMovieById(anyString()))
                 .thenReturn(Optional.empty());
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            rentalInfoService.generateStatement(customer);
+            rentalInfoService.generateStatement(anyString());
         });
 
         // Assert

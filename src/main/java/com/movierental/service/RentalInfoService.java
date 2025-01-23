@@ -12,5 +12,5 @@ import java.util.Map;
 
 public interface RentalInfoService {
 
-    String generateStatement(Customer customer);
+    String generateStatement(String customerId);
 }

@@ -1,21 +1,14 @@
 package com.movierental.service;
 
-import com.movierental.exception.MovieNotFoundException;
-import com.movierental.model.Customer;
 import com.movierental.model.Movie;
-import com.movierental.model.MovieRental;
 import com.movierental.model.MovieType;
-import org.junit.jupiter.api.BeforeEach;
+import com.movierental.util.ChargeCalculator;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class ChargeCalculatorTest {
 

@@ -1,4 +1,4 @@
-package com.movierental.service;
+package com.movierental.util;
 
 import com.movierental.model.Movie;
 import org.springframework.stereotype.Service;
@@ -8,10 +8,9 @@ import org.springframework.stereotype.Service;
 Class for calculate rental charge
 
 * */
-@Service
 public class ChargeCalculator {
 
-    public double calculateCharge(Movie movie, int days) {
+    public static double calculateCharge(Movie movie, int days) {
         double charge;
         return switch (movie.code()) {
             case REGULAR -> {
